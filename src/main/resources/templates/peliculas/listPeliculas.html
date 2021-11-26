@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de la pelicula</title>
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+	<link th:href="@{/bootstrap/css/theme.css}" rel="stylesheet">
+
+	</head>
+
+	<body>
+
+	<header th:insert="includes/menu :: menu-principal">
+   
+    </header>
+
+    <div class="container theme-showcase" role="main">
+
+      <h3>Listado de Peliculas</h3>
+      
+      
+      <a th:href="@{/peliculas/create}" class="btn btn-success" role="button" title="Nueva Pelicula" >Nueva</a><br><br>
+      <div th:if="${msg != null}" class='alert alert-success' th:text="${msg}" role='alert'></div> 
+      <div class="table-responsive">
+        <table class="table table-hover table-striped table-bordered">
+            <tr>
+                <th>Titulo</th>
+                <th>Genero</th>
+                <th>Clasificacion</th>
+                <th>Duracion</th>
+                <th>Fecha Estreno</th>
+                <th>Estatus</th>
+                <th>Opciones</th>
+            </tr>
+            <tr th:each="pelicula : ${peliculas}">
+                <td th:text="${pelicula.titulo}"></td>
+                <td th:text="${pelicula.genero}"></td>
+                <td th:text="${pelicula.clasificacion}"></td>
+                <td th:text="${pelicula.duracion}"></td>
+                <td th:text="${#dates.format(pelicula.fechaEstreno, 'dd-MM-yyyy')}"></td>
+                <td>
+                    <span th:if= "${pelicula.estatus == 'Activa'} " class="label label-success">Activa</span>
+                    <span th:unless= "${pelicula.estatus == 'Activa'} " class="label label-danger">Inactiva</span> 
+                </td>
+                <td>
+                    <a th:href="@{/peliculas/edit/{id} (id=${pelicula.id}) }" class="btn btn-success btn-sm" role="button" title="Edit" ><span class="glyphicon glyphicon-pencil"></span></a>
+                    <a th:href="@{/peliculas/delete/{id} (id=${pelicula.id}) }" onclick="return confirm('¿Estas seguro?')" class="btn btn-danger btn-sm" role="button" title="Eliminar" ><span class="glyphicon glyphicon-trash"></span></a>
+                </td>
+            </tr>
+            
+        </table>
+      </div>
+          
+      <hr class="featurette-divider">
+
+
+		
+
+	    <!-- FOOTER -->
+	   <footer th:insert="includes/footer :: pie-pagina"> </footer>
+
+	</div> <!-- /container -->
+
+		<!-- Bootstrap core JavaScript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
+		<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script> 
+	</body>
+</html>
+

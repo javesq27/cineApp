@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">    
+      <meta name="author" content="">
+      <title>Formulario de Contacto</title>
+      <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">    
+      <link th:href="@{bootstrap/css/theme.css}" rel="stylesheet">
+
+   </head>
+
+   <body>
+
+      <!-- Fixed navbar -->
+      <header th:insert="includes/menu :: menu-principal">
+   
+      </header>
+
+      <div class="container theme-showcase" role="main">
+
+         <h3 class="blog-title text-center"><span class="label label-success">Contacto</span></h3><br>  
+
+         <form class="form-horizontal" th:action="@{/contacto}" method="POST" th:object="${contacto}">
+            <div class="form-group">
+               <label for="nombre" class="col-sm-2 control-label">Nombre</label>
+               <div class="col-sm-10">
+                  <input type="text" class="form-control" id="nombre" th:field="*{nombre}" name="nombre" placeholder="Nombre" required="required">
+               </div>
+            </div>
+            <div class="form-group">
+               <label for="email" class="col-sm-2 control-label">Email</label>
+               <div class="col-sm-10">
+                  <input type="email" class="form-control" th:field="*{email}" name="email" id="email" placeholder="Email" required="required">
+               </div>
+            </div>
+
+            <div class="form-group">
+               <label for="generos" class="col-sm-2 control-label">Géneros Favoritos</label>
+               <div class="col-sm-10">
+                  <select id="genero" th:field="*{generos}" name="generos" multiple="multiple" class="form-control">
+                     <option th:each="genero : ${generos}" th:value="${genero}" th:text="${genero}"></option>                 
+                  </select> 
+               </div>
+            </div>
+
+            <div class="form-group">
+               <label class="col-sm-2 control-label">Tu experiencia en el sitio</label>
+               <div class="col-sm-10">
+                  <label><input type="radio" th:field="*{rating}" name="rating" value="1">Muy Mala</label>
+                  <label><input type="radio" th:field="*{rating}" name="rating" value="2">Mala</label>
+                  <label><input type="radio" th:field="*{rating}" name="rating" value="3">Regular</label>
+                  <label><input type="radio" th:field="*{rating}" name="rating" value="4">Buena</label>
+                  <label><input type="radio" th:field="*{rating}" name="rating" value="5">Muy Buena</label>
+               </div>
+            </div>
+
+            <div class="form-group">
+               <label class="col-sm-2 control-label">Te gustaría recibir notificaciones de:</label>
+               <div class="col-sm-10">
+                  <label><input type="checkbox" th:field="*{notificaciones}" name="notificaciones" value="Estrenos">Estrenos</label>
+                  <label><input type="checkbox" th:field="*{notificaciones}"  name="notificaciones" value="Promociones">Promociones</label>
+                  <label><input type="checkbox" th:field="*{notificaciones}"  name="notificaciones" value="Noticias" >Noticias</label>
+                  <label><input type="checkbox" th:field="*{notificaciones}"  name="notificaciones" value="Preventas">Preventas</label>
+               </div>
+            </div>
+
+            <div class="form-group">
+               <label class="col-sm-2 control-label">Comentarios:</label>
+               <div class="col-sm-10">
+                  <textarea class="form-control" th:field="*{comentarios}" name="comentarios" id="comentarios" rows="5"></textarea>
+               </div>
+            </div>
+
+            <div class="form-group">
+               <div class="col-sm-offset-2 col-sm-10">
+                  <button type="submit" class="btn btn-success">Enviar</button>
+               </div>
+            </div>
+
+         </form>
+
+         <hr class="featurette-divider">
+
+         <footer th:insert="includes/footer :: pie-pagina"> </footer>
+
+      </div> <!-- /container -->
+
+      <!-- Bootstrap core JavaScript
+      ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
+      <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script> 		
+   </body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">   
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>CineSite | Bienvenido</title>
+
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/theme.css}" rel="stylesheet">
+
+  </head>
+
+  <body>
+    <header th:insert="includes/menu :: menu-principal">
+   
+    </header>
+
+    
+
+    <div class="container theme-showcase" role="main">
+
+      <!-- Carousel
+    ================================================== -->
+      <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators" >
+          <li th:each="banner, loop : ${banners}">
+            <span th:if="${loop.index==0}" data-target="#myCarousel" data-slide-to="${loop.index}" class="active"></span>
+            <span th:unless="${loop.index==0}" data-target="#myCarousel" data-slide-to="${loop.index}"></span>
+          </li>
+          
+
+
+        <!--
+          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+          <li data-target="#myCarousel" data-slide-to="1"></li>
+          <li data-target="#myCarousel" data-slide-to="2"></li>         
+          <li data-target="#myCarousel" data-slide-to="3"></li>
+        -->	
+        </ol>
+        <!-- Image Size 1140 x 250 -->
+        <div class="carousel-inner" role="listbox" th:each="banner, loop : ${banners}">
+        
+          <div th:if="${loop.index==0}" class="item active">         
+            <img th:src="@{/images/{banner} ( banner=${banner.archivo} ) }" alt="${banner.titulo}" title="${banner.titulo}" >
+          </div>
+          <div th:unless="${loop.index==0}" class="item">         
+            <img th:src="@{/images/{banner} ( banner=${banner.archivo} ) }" alt="${banner.titulo}" title="${banner.titulo}" >
+          </div>
+        </div>
+        
+         
+        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+        
+      </div><!-- /.carousel -->
+      
+      <div class="row page-header">          
+        <div class="col-lg-12">         
+          <h2 class="text text-center"><span class="label label-success">EN CARTELERA</span></h2>          
+          <form class="form-inline" th:action="@{/search}" method="post">
+            <div class="form-group">
+              <label for="fecha">Fecha: </label>
+              <select id="fecha" name="fecha" class="form-control">
+                <option th:each="fecha : ${fechas}" th:if="${fechaBusqueda == fecha}" th:value="${fecha}" th:text="${fecha}"></option>
+                <option th:each="fecha : ${fechas}" th:unless="${fechaBusqueda == fecha}" th:value="${fecha}" th:text="${fecha}"></option>             
+              </select>
+            </div>            
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Marketing messaging -->
+      <div class="container marketing">
+
+        <div class="row">
+
+          <div th:each="pelicula : ${peliculas}" class="col-xs-12 col-sm-6 col-md-3">
+            <img class="img-rounded" th:src="@{/images/{img} ( img=${pelicula.imagen} ) }" alt="Generic placeholder image" width="150" height="200">
+            <h4 th:text="${pelicula.titulo}"></h4>
+            <h4>
+              <span class="label label-default" th:text="${pelicula.clasificacion}"></span>
+              <span class="label label-default" th:text="${pelicula.duracion}" min></span>
+              <span class="label label-default" th:text="${pelicula.genero}"></span>
+            </h4>
+            <!--         
+            <p><a class="btn btn-sm btn-primary" th:href="@{/detail/{id}/{fecha}(id = ${pelicula.id}, fecha = ${fechaBusqueda})} " role="button">Consulta Horarios &raquo;</a></p>
+            -->
+            <p><a class="btn btn-sm btn-primary" th:href="@{/detail(idMovie = ${pelicula.id}, fecha = ${fechaBusqueda})} " role="button">Consulta Horarios &raquo;</a></p>
+          </div>
+
+
+        </div>
+
+        <div class="page-header">
+          <h2 class="text text-center"><span class="label label-success">Noticias y novedades</span></h2>
+        </div>
+
+        <div class="row">
+
+          <div class="col-sm-12 blog-main">
+
+            <div th:each="noticia : ${noticias}" class="blog-post">              
+              <h3 th:text="${noticia.titulo}" class="blog-post-title"></h3>
+
+              <p class="blog-post-meta"><span th:text="${#dates.format(noticia.fecha, 'dd-MM-yyyy')}" class="label label-danger"></span></p>             
+              <p><span th:text="${noticia.detalle}" style="color: #0000ff;"></span></p>
+
+              <hr class="featurette-divider">
+            </div>
+
+           
+
+          </div>
+        </div>
+
+      </div>
+
+      <footer th:insert="includes/footer :: pie-pagina"> </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script> 
+  </body>
+</html>

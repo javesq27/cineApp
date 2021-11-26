@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <title>Creacion de imagenes del Banner</title>    
+
+      <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">   
+      <link th:href="@{/bootstrap/css/theme.css}" rel="stylesheet">
+
+   </head>
+
+   <body>
+
+      <header th:insert="includes/menu :: menu-principal">
+   
+    </header>
+
+      <div class="container theme-showcase" role="main">
+
+         <h3 class="blog-title"><span class="label label-success">Datos de la imagen</span></h3>
+
+         <form th:action="@{/banners/save}" method="POST"  th:object="${banner}" enctype="multipart/form-data">
+         <div th:if="${#fields.hasErrors('*')}"class='alert alert-danger' role='alert'>
+            Por favor corrija los siguientes errores:
+            <ul>
+               <li th:each="err : ${#fields.errors('*')}" th:text="${err}"/>
+            </ul>
+         </div>
+            <div class="row">         
+               <div class="col-sm-6">
+                  <div class="form-group">
+                     <label for="titulo">Titulo</label> 
+                     <input type="hidden" th:field="*{id}">            
+                     <input type="text" class="form-control" th:field="*{titulo}" name="titulo" id="titulo" required="required"/>
+                  </div>
+               </div>
+
+
+               <div class="col-sm-3">
+                  <div class="form-group">
+                     <label for="imagen">Imagen</label>
+                     <input type="hidden" th:field="*{archivo}">
+                     <input type="file" id="archivoImagen" name="archivoImagen" required="required" />
+                     <p class="help-block">Tamaño recomendado: 1140 x 250 </p>
+                  </div> 
+               </div> 
+
+               <div class="col-sm-3">
+                  <div class="form-group">
+                     <label for="estatus">Estatus</label>             
+                     <select id="estatus" th:field="*{estatus}" name="estatus" class="form-control">
+                        <option value="Activo">Activo</option>
+                        <option value="Inactivo">Inactivo</option>                
+                     </select>  
+                  </div>
+               </div>
+            </div>
+
+            <button type="submit" class="btn btn-danger" >Guardar</button>
+         </form> 
+
+         <hr class="featurette-divider">
+
+         <!-- FOOTER -->
+         <footer th:insert="includes/footer :: pie-pagina"> </footer>
+
+      </div> <!-- /container -->
+
+      <!-- Bootstrap core JavaScript
+      ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
+      <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script> 
+
+   </body>
+</html>

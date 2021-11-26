@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido a Cineapp</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    
+
+</head>
+<body>
+    <h1>Lista de peliculas</h1>
+    <!--
+    <ol>
+        <li th:each="pelicula : ${peliculas}" th:text ="${pelicula}"></li>
+    <ol>
+    -->
+    <table border=1>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titulo</th>
+                <th>Duracion</th>
+                <th>Clasificacion</th>
+                <th>Genero</th>
+                <th>Imagen</th>
+                <th>Fecha Estreno</th>
+                <th>Estatus</th>
+            <tr>
+        </thead>
+        <tbody>
+            <tr th:each="pelicula : ${peliculas}">
+                <td th:text="${pelicula.id}"></td>
+                <td th:text="${pelicula.titulo}"></td>
+                <td th:text="${pelicula.duracion}"></td>
+                <td th:text="${pelicula.clasificacion}"></td>
+                <td th:text="${pelicula.genero}"></td>
+                <td> 
+                    <img th:src="@{/images/{img} ( img=${pelicula.imagen} ) }" width="80" height="80">
+                </td>
+                <td th:text="${pelicula.fechaEstreno}"></td>
+                <td>
+                    <span th:if= "${pelicula.estatus == 'Activa'} " class="badge badge-success">Activa</span>
+                    <span th:unless= "${pelicula.estatus == 'Activa'} " class="badge badge-danger">Inactiva</span> 
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+  
+    
+</body>
+</html>
